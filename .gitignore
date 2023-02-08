@@ -1,1 +1,3 @@
 myapi/__pycache__/
+test/
+database.db
