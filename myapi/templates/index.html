@@ -34,37 +34,15 @@
 <body>
 
     <div class="limiter">
-        <div class="container-login100" style="background-image: url('static/images/bg-01.jpg');">
+        <div class="container-login100" style="background-image: url('static/images/bg-02.jpg');">
             <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
                 <div class="login100-form validate-form">
                     <span class="login100-form-title p-b-49">
-                        배달 정보
+                        실시간 로봇 위치
                     </span>
 
-                    <button class="box_main" onclick="location.href='/status_main'">
-                        <div class="box">
-                            <div class="box_in">
-                                <div style="align-items: center; display: flex; float: left; margin-right: 20px;" class="login100-form-h2">
-                                    1
-                                </div>
-                                <div style="align-items: center; display: flex;" class="login100-form-h2">
-                                    진행 중
-                                </div>
-                            </div>
-                                <div style="align-items: center; display: flex;" class="login100-form-h2">
-                                    {{ dest }}호<br>{{ hour}} : {{ minute }}
-                                </div>
-
-                        </div>
-                    </button>
-
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn" onclick="location.href='/dest_form'">
-                                주문 하기
-                            </button>
-                        </div>
+                    <div class="box_main">
+                        <img src="static/images/maps/map_raw.png" style="width: 100%; height: 100%;" ></img>
                     </div>
 
                 </div>

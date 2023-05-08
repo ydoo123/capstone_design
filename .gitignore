@@ -1,3 +1,4 @@
-myapi/__pycache__/
+__pycache__/
 test/
 database.db
+.vscode

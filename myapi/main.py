@@ -3,6 +3,7 @@ from pydantic import BaseModel
 import sqlite3
 import datetime
 from starlette.responses import FileResponse
+from starlette.staticfiles import StaticFiles
 
 
 TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
@@ -17,11 +18,12 @@ class Item(BaseModel):
 
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"))
 
 
 @app.get("/")
 async def read_index():
-    return FileResponse("static/index.html")
+    return FileResponse("templates/index.html")
 
 
 @app.post("/upload_dest")
