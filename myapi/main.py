@@ -6,14 +6,14 @@ from starlette.responses import FileResponse
 from starlette.staticfiles import StaticFiles
 
 
-TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+TIME_FORMAT = "%Y-%m-%d_%H:%M:%S"
 
 
 class Item(BaseModel):
     cam_id: int
     x: float
     y: float
-    theta: float
+    z: float
     w: float
 
 
@@ -35,12 +35,12 @@ def upload_dest(item: Item):
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute(
-        "INSERT INTO dest_table (cam_id, x, y, theta, w, time) VALUES (?, ?, ?, ?, ?, ?)",  # noqa: E501
+        "INSERT INTO dest_table (cam_id, x, y, z, w, time) VALUES (?, ?, ?, ?, ?, ?)",  # noqa: E501
         (
             item.cam_id,
             item.x,
             item.y,
-            item.theta,
+            item.z,
             item.w,
             datetime.datetime.now().strftime(TIME_FORMAT),
         ),
