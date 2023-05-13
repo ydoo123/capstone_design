@@ -28,6 +28,11 @@ async def read_index():
     return FileResponse("templates/index.html")
 
 
+@app.get("/HRI")
+async def HRI():
+    return FileResponse("templates/HRI.html")
+
+
 @app.post("/upload_dest")
 def upload_dest(item: Item):
     """
