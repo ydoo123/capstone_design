@@ -4,9 +4,11 @@ import sqlite3
 import datetime
 from starlette.responses import FileResponse
 from starlette.staticfiles import StaticFiles
+from pytz import timezone
 
 
 TIME_FORMAT = "%Y-%m-%d_%H:%M:%S"
+KST = timezone("Asia/Seoul")
 
 
 class Item(BaseModel):
@@ -42,7 +44,7 @@ def upload_dest(item: Item):
             item.y,
             item.z,
             item.w,
-            datetime.datetime.now().strftime(TIME_FORMAT),
+            datetime.datetime.now(KST).strftime(TIME_FORMAT),
         ),
     )
     conn.commit()
