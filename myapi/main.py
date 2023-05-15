@@ -33,6 +33,34 @@ async def HRI():
     return FileResponse("templates/HRI.html")
 
 
+@app.get("/quit")
+def quit():
+    """
+    When post to /quit, update the time in quit_table in database.db.
+    """
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute(
+        "INSERT INTO quit_table (time) VALUES (?)",
+    )
+    conn.commit()
+    conn.close()
+    return "quit success"
+
+
+@app.get("/get_quit")
+def get_quit():
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM quit_table ORDER BY id DESC LIMIT 1")
+    result = c.fetchone()
+    conn.close()
+
+    quit_dict = dict(zip([x[0] for x in c.description], result))
+
+    return quit_dict
+
+
 @app.post("/upload_dest")
 def upload_dest(item: Item):
     """

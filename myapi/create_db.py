@@ -6,7 +6,7 @@ TIME_FORMAT = "%Y-%m-%d_%H:%M:%S"
 
 
 def create_db():
-    """create datebase"""
+    """create database"""
     conn = sqlite3.connect("database.db")
     return None
 
@@ -29,6 +29,26 @@ def create_table():
     conn.close()
     return None
 
+
+def create_quit_table():
+    """
+    Create a table.
+    table_name: quit_table
+    The columns contain id, time.
+
+    Each data type is id: int, time:str.
+    """
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute(
+        """CREATE TABLE quit_table
+                (id integer primary key, time text)"""
+    )
+    conn.commit()
+    conn.close()
+    return None
+
+
 def update_table():
     """
     dest_table에 접속해서, id: 1, cam_id: 0, x: 1.0, y: 2.0, z: 3.0, w: 4.0, time: 2021-05-12_11:11:11 인 값을 넣는다.
@@ -47,4 +67,5 @@ def update_table():
 if __name__ == "__main__":
     # create_db()
     # create_table()
-    update_table()
+    # update_table()
+    create_quit_table()
