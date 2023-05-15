@@ -36,16 +36,18 @@ async def HRI():
 @app.get("/quit")
 def quit():
     """
-    When post to /quit, update the time in quit_table in database.db.
+    When get to /quit, update the current time in quit_table in database.db.
     """
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute(
         "INSERT INTO quit_table (time) VALUES (?)",
+        (datetime.datetime.now(KST).strftime(TIME_FORMAT),),
     )
     conn.commit()
     conn.close()
-    return "quit success"
+
+    return {"message": "success"}
 
 
 @app.get("/get_quit")
