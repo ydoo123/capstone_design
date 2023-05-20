@@ -30,6 +30,36 @@ body {
     position: absolute;
 }
 
+.eyebrow {
+    background-color: var(--eye-color);
+    /* Set the color of the eyebrows */
+    height: calc(var(--eye-size) / 3);
+    /* Set the height of the eyebrows */
+    width: calc(var(--eye-size) * 1.25);
+    /* Set the width of the eyebrows */
+    z-index: 3;
+    /* Ensure the eyebrows are displayed above the eyelids */
+
+    /* Set the initial rotation of the eyebrows */
+}
+
+.eyebrow.left {
+    top: calc(var(--eye-size) / 1);
+    /* Adjust the vertical position of the left eyebrow */
+    left: calc(var(--eye-size) / 12);
+    /* Adjust the horizontal position of the left eyebrow */
+    transform: rotate(20deg);
+}
+
+.eyebrow.right {
+    top: calc(var(--eye-size) / 1);
+    /* Adjust the vertical position of the right eyebrow */
+    right: calc(var(--eye-size) / 12);
+    /* Adjust the horizontal position of the right eyebrow */
+    transform: rotate(-20deg);
+}
+
+
 .eye {
     background-color: var(--eye-color);
     border-radius: 100%;
