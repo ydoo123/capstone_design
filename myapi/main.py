@@ -5,7 +5,6 @@ import datetime
 from starlette.responses import FileResponse
 from starlette.staticfiles import StaticFiles
 from pytz import timezone
-import request
 
 
 TIME_FORMAT = "%Y-%m-%d_%H:%M:%S"
