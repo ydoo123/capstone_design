@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
 import sqlite3
 import datetime
@@ -105,8 +105,8 @@ def get_dest():
 
 
 @app.post("/upload_image")
-async def upload_image(image: bytes):
-    img = Image.open(io.BytesIO(image))
+async def upload_image(image: UploadFile = File(...)):
+    img = Image.open(io.BytesIO(await image.read()))
 
     img_name = str(uuid.uuid4()) + ".jpg"
     img_path = os.path.join("static", "images", "fall", img_name)
