@@ -24,7 +24,7 @@ class Item(BaseModel):
     w: float
 
 
-def get_image():
+def get_image() -> str:
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute("SELECT * FROM image_table ORDER BY id DESC LIMIT 1")
