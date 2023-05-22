@@ -3,3 +3,4 @@ test/
 database.db
 .vscode
 test_*.py
+static/images/fall/
