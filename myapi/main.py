@@ -44,7 +44,7 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/")
 async def read_index(request: Request):
     image_path = get_image()
-    
+
     return templates.TemplateResponse(
         "index.html",
         {"request": request, "image": image_path},
