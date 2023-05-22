@@ -1,10 +1,14 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI
 from pydantic import BaseModel
 import sqlite3
 import datetime
 from starlette.responses import FileResponse
 from starlette.staticfiles import StaticFiles
 from pytz import timezone
+from PIL import Image
+import io
+import uuid
+import os
 
 
 TIME_FORMAT = "%Y-%m-%d_%H:%M:%S"
@@ -101,27 +105,26 @@ def get_dest():
 
 
 @app.post("/upload_image")
-async def upload_image(file: UploadFile = File(...)):
-    """
-    When you post to /upload_image,
-    it receives the image file and saves it in the static folder.
-    then insert image file path to image_table in database.db.
-    """
+async def upload_image(image: bytes):
+    img = Image.open(io.BytesIO(image))
 
-    image_path = f"static/images/fall/{file.filename}"
-    with open(image_path, "wb") as f:
-        await file.read_into(f)
+    img_name = str(uuid.uuid4()) + ".jpg"
+    img_path = os.path.join("static", "images", "fall", img_name)
+
+    # save img to img_path
+    img.save(img_path)
 
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute(
-        "INSERT INTO image_table (name, path, time) VALUES (?, ?, ?)",
+        "INSERT INTO image_table (name, path, time) VALUES (?, ?, ?)",  # noqa: E501
         (
-            file.filename,
-            image_path,
+            img_name,
+            img_path,
             datetime.datetime.now(KST).strftime(TIME_FORMAT),
         ),
     )
     conn.commit()
     conn.close()
+
     return {"message": "success"}
