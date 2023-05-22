@@ -1,4 +1,5 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, Request
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 import sqlite3
 import datetime
@@ -23,13 +24,31 @@ class Item(BaseModel):
     w: float
 
 
+def get_image():
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM image_table ORDER BY id DESC LIMIT 1")
+    result = c.fetchone()
+    conn.close()
+
+    image_dict = dict(zip([x[0] for x in c.description], result))
+
+    return image_dict["path"]
+
+
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"))
+templates = Jinja2Templates(directory="templates")
 
 
 @app.get("/")
-async def read_index():
-    return FileResponse("templates/index.html")
+async def read_index(request: Request):
+    image_path = get_image()
+    
+    return templates.TemplateResponse(
+        "index.html",
+        {"request": request, "image": image_path},
+    )
 
 
 @app.get("/HRI")
