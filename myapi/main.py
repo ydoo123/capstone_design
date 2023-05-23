@@ -87,6 +87,36 @@ def get_quit():
     return quit_dict
 
 
+@app.get("/arrive")
+def arrive():
+    """
+    When get to /quit, update the current time in quit_table in database.db.
+    """
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute(
+        "INSERT INTO arrive_table (time) VALUES (?)",
+        (datetime.datetime.now(KST).strftime(TIME_FORMAT),),
+    )
+    conn.commit()
+    conn.close()
+
+    return {"message": "success"}
+
+
+@app.get("/get_arrive")
+def get_arrive():
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM arrive_table ORDER BY id DESC LIMIT 1")
+    result = c.fetchone()
+    conn.close()
+
+    quit_dict = dict(zip([x[0] for x in c.description], result))
+
+    return quit_dict
+
+
 @app.post("/upload_dest")
 def upload_dest(item: Item):
     """
