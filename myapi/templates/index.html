@@ -36,7 +36,7 @@
     <div class="limiter">
         <div class="container-login100" style="background-image: url('static/images/bg_03.jpg');">
             <div class="wrap-custom100 p-l-55 p-r-55 p-t-65 p-b-54"
-                style="display: flex; background: #ffffff; border-radius: 20px;">
+                style="display: flex; background: #ffffff; border-radius: 20px; width: 80%;">
                 <div class=" login100-form validate-form" style="flex: 1; margin: 5%;">
                     <span class="login100-form-title p-b-49">
                         실시간 로봇 위치
@@ -47,12 +47,15 @@
                     </div>
                 </div>
 
-                <div class="login100-form validate-form" style="flex: 1">
+                <div style="border-left: 1px solid #e0e0e0; margin: 1%;">
+                </div>
+
+                <div class="login100-form validate-form" style="flex: 1; margin: 5%">
                     <div class="box_main">
                         <img src="{{image}}" style="width: 100%; height: 100%;"></img>
                     </div>
                     <div class="custom100-text p-b-5">
-                        넘어진 시간: 2023-05-22 22:10:12
+                        넘어진 시간: {{time}}
                     </div>
                     <div class="custom100-text p-b-5">
                         넘어진 위치: 112호

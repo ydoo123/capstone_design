@@ -24,7 +24,7 @@ class Item(BaseModel):
     w: float
 
 
-def get_image() -> str:
+def get_image_time() -> str:
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute("SELECT * FROM image_table ORDER BY id DESC LIMIT 1")
@@ -33,7 +33,7 @@ def get_image() -> str:
 
     image_dict = dict(zip([x[0] for x in c.description], result))
 
-    return image_dict["path"]
+    return image_dict["path"], image_dict["time"]
 
 
 app = FastAPI()
@@ -43,11 +43,11 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
 async def read_index(request: Request):
-    image_path = get_image()
+    image_path, time = get_image_time()
 
     return templates.TemplateResponse(
         "index.html",
-        {"request": request, "image": image_path},
+        {"request": request, "image": image_path, "time":time},
     )
 
 
