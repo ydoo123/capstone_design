@@ -44,10 +44,11 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/")
 async def read_index(request: Request):
     image_path, time = get_image_time()
+    time = time.replace("_", " ")
 
     return templates.TemplateResponse(
         "index.html",
-        {"request": request, "image": image_path, "time":time},
+        {"request": request, "image": image_path, "time": time},
     )
 
 
