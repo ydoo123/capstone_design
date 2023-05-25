@@ -16,6 +16,8 @@ class EyeController {
     upperRightEyelid,
     lowerLeftEyelid,
     lowerRightEyelid,
+    leftEyebrow,
+    rightEyebrow
   } = {}) {
     this._leftEye = leftEye;
     this._rightEye = rightEye;
@@ -23,6 +25,8 @@ class EyeController {
     this._upperRightEyelid = upperRightEyelid;
     this._lowerLeftEyelid = lowerLeftEyelid;
     this._lowerRightEyelid = lowerRightEyelid;
+    this._leftEyebrow = leftEyebrow;
+    this._rightEyebrow = rightEyebrow;
     return this;
   }
 
@@ -204,6 +208,29 @@ class EyeController {
       eyeElem.style.bottom = `calc(${this._eyeSize} / 3 * 2 * ${1 - y})`;
     }
   }
+
+  // make the setEyeClose function to eye close.
+  setEyeClose(eyeElem, isClose) {
+    if (!eyeElem) {  // assumes all elements are always set together
+      console.warn('Invalid inputs ', eyeElem, isClose, '; retuning');
+      return;
+    }
+
+    if (isClose) {
+      eyeElem.style.transform = 'rotateX(89deg)';
+    } else {
+      eyeElem.style.transform = 'rotateX(1deg)';
+    }
+  }
+
+  setEyebrowAngle(eyebrowElem, angle) {
+    if (!eyebrowElem) {  // assumes all elements are always set together
+      console.warn('Invalid inputs ', eyebrowElem, angle, '; retuning');
+      return;
+    }
+
+    eyebrowElem.style.transform = `rotate(${angle}deg)`;
+  }
 }
 
 const eyes = new EyeController({
@@ -213,10 +240,66 @@ const eyes = new EyeController({
   upperRightEyelid: document.querySelector('.right .eyelid.upper'),
   lowerLeftEyelid: document.querySelector('.left .eyelid.lower'),
   lowerRightEyelid: document.querySelector('.right .eyelid.lower'),
+  leftEyebrow: document.querySelector('.eyebrow.left'),
+  rightEyebrow: document.querySelector('.eyebrow.right'),
 });
 
 
+async function compareTime(set_time) {
+  // Fetch the JSON data from the /get_dest and return json
+  var dest_json = await fetch('/get_dest').then(response => response.json());
+  // Get the time string from the JSON data 'time' field
+  var timeString = dest_json.time;
+
+  // Split the time string into date and time components
+  var time = new Date(timeString.replace('_', 'T'));
+
+  // Create a new Date object with the extracted components
+
+  const TempTime = new Date();
+  const timeZone = "Asia/Seoul";
+  const options = {
+    timeZone: timeZone,
+    hour12: false, // Use 24-hour format
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  };
+
+  currentTime = new Date(TempTime.toLocaleString("en-US", options).replace(',', ''));
+
+  result = Math.abs(currentTime - time) < set_time;
+
+  return result;
+};
+
 window.onload = function () {
-  eyes.stopBlinking();
-  eyes.startBlinking();
+  // start with eye closed
+  const set_time = 5000;
+  eyes.setEyeClose(eyes._leftEye, true);
+  eyes.setEyeClose(eyes._rightEye, true);
+
+  eyes.setEyebrowAngle(eyes._leftEyebrow, 0);
+  eyes.setEyebrowAngle(eyes._rightEyebrow, 0);
+
+  // Create a new interval object.
+  const interval = setInterval(() => {
+
+    // Call the compareTime() function and store the promiss result.
+    const resultPromise = compareTime(set_time);
+    resultPromise.then(result => {
+      if (result === true) {
+        eyes.setEyeClose(eyes._leftEye, false);
+        eyes.setEyeClose(eyes._rightEye, false);
+        eyes.setEyebrowAngle(eyes._leftEyebrow, 20);
+        eyes.setEyebrowAngle(eyes._rightEyebrow, -20);
+        eyes.startBlinking();
+        clearInterval(interval);
+        console.log("interval cleared");
+      }
+    });
+  }, 1000);
 };

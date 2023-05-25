@@ -48,7 +48,7 @@ body {
     /* Adjust the vertical position of the left eyebrow */
     left: calc(var(--eye-size) / 12);
     /* Adjust the horizontal position of the left eyebrow */
-    transform: rotate(20deg);
+    transform: rotateX(20deg);
 }
 
 .eyebrow.right {
@@ -56,7 +56,7 @@ body {
     /* Adjust the vertical position of the right eyebrow */
     right: calc(var(--eye-size) / 12);
     /* Adjust the horizontal position of the right eyebrow */
-    transform: rotate(-20deg);
+    transform: rotateX(-20deg);
 }
 
 

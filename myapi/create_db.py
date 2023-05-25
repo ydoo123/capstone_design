@@ -103,10 +103,10 @@ def update_table():
 
 
 if __name__ == "__main__":
-    # create_db()
-    # create_table()
-    # update_table()
-    # create_quit_table()
-    # create_image_table()
-    #create_arrive_table()
-    print('')
+    create_db()
+    create_table()
+    update_table()
+    create_quit_table()
+    create_image_table()
+    create_arrive_table()
+    print("")
