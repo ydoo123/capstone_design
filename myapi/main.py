@@ -178,3 +178,8 @@ async def upload_image(image: UploadFile = File(...)):
     conn.close()
 
     return {"message": "success"}
+
+
+@app.get("/HRI_RETURN")
+async def HRI_RETURN():
+    return FileResponse("templates/HRI_RETURN.html")
