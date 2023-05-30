@@ -300,8 +300,6 @@ window.onload = function () {
         eyes.setEyebrowAngle(eyes._leftEyebrow, 20);
         eyes.setEyebrowAngle(eyes._rightEyebrow, -20);
         eyes.startBlinking();
-        var audio = new Audio('/static/sound/siren.mp3');
-        audio.play();
         clearInterval(interval);
         console.log("interval cleared");
       }
